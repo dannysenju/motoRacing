@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="mrPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.softtrons.entitiesmr.jpa.entities.DetalleCreditoCompra</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.Ciudad</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.DetalleVenta</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.TipoTransaccion</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.Persona</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.Categoria</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.PresentacionProducto</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.EmpleadoRoles</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.TipoPersona</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.Producto</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.Venta</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.Compra</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.Departamento</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.Menu</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.Perfiles</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.CreditoCompra</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.PerModulos</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.TipoDocumento</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.Roles</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.DetalleCompra</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.Usuario</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.Empleado</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.UbicacionProducto</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.EmpleadoUsuarios</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.DetalleCreditoVenta</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.CreditoVenta</class>
+    <class>com.softtrons.entitiesmr.jpa.entities.Modulos</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/moto10racingHBT?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="root"/>
+    </properties>
+  </persistence-unit>
+</persistence>
