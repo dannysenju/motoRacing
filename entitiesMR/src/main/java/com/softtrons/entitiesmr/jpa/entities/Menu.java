@@ -8,13 +8,14 @@ package com.softtrons.entitiesmr.jpa.entities;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,9 +25,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author danny
  */
-@MappedSuperclass
+@Entity
 @Table(name = "Menu", catalog = "moto10racingHBT", schema = "")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Menu.findAll", query = "SELECT m FROM Menu m")
+    , @NamedQuery(name = "Menu.findByIdMenu", query = "SELECT m FROM Menu m WHERE m.idMenu = :idMenu")
+    , @NamedQuery(name = "Menu.findByNombreMenu", query = "SELECT m FROM Menu m WHERE m.nombreMenu = :nombreMenu")
+    , @NamedQuery(name = "Menu.findByLinkMenu", query = "SELECT m FROM Menu m WHERE m.linkMenu = :linkMenu")})
 public class Menu implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,7 +52,7 @@ public class Menu implements Serializable {
     @Column(name = "linkMenu")
     private String linkMenu;
     @JoinColumn(name = "idModulos", referencedColumnName = "idModulos")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private Modulos idModulos;
 
     public Menu() {

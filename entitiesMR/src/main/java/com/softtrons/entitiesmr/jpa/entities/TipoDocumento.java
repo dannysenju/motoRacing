@@ -10,11 +10,12 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -26,9 +27,13 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author danny
  */
-@MappedSuperclass
+@Entity
 @Table(name = "TipoDocumento", catalog = "moto10racingHBT", schema = "")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "TipoDocumento.findAll", query = "SELECT t FROM TipoDocumento t")
+    , @NamedQuery(name = "TipoDocumento.findByIdTipoDocumento", query = "SELECT t FROM TipoDocumento t WHERE t.idTipoDocumento = :idTipoDocumento")
+    , @NamedQuery(name = "TipoDocumento.findByDescripcionDocumento", query = "SELECT t FROM TipoDocumento t WHERE t.descripcionDocumento = :descripcionDocumento")})
 public class TipoDocumento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,7 +47,7 @@ public class TipoDocumento implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "descripcionDocumento")
     private String descripcionDocumento;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoDocumento", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoDocumento")
     private List<Persona> personaList;
 
     public TipoDocumento() {

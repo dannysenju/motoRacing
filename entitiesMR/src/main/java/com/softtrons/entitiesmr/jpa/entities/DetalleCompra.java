@@ -8,13 +8,14 @@ package com.softtrons.entitiesmr.jpa.entities;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,9 +25,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author danny
  */
-@MappedSuperclass
+@Entity
 @Table(name = "detalleCompra", catalog = "moto10racingHBT", schema = "")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "DetalleCompra.findAll", query = "SELECT d FROM DetalleCompra d")
+    , @NamedQuery(name = "DetalleCompra.findByIdDetalleCompra", query = "SELECT d FROM DetalleCompra d WHERE d.idDetalleCompra = :idDetalleCompra")
+    , @NamedQuery(name = "DetalleCompra.findByCodigoProducto", query = "SELECT d FROM DetalleCompra d WHERE d.codigoProducto = :codigoProducto")
+    , @NamedQuery(name = "DetalleCompra.findByNombreProducto", query = "SELECT d FROM DetalleCompra d WHERE d.nombreProducto = :nombreProducto")
+    , @NamedQuery(name = "DetalleCompra.findByValorCompraProducto", query = "SELECT d FROM DetalleCompra d WHERE d.valorCompraProducto = :valorCompraProducto")
+    , @NamedQuery(name = "DetalleCompra.findByValorVentaProducto", query = "SELECT d FROM DetalleCompra d WHERE d.valorVentaProducto = :valorVentaProducto")
+    , @NamedQuery(name = "DetalleCompra.findByUnidadesCompradas", query = "SELECT d FROM DetalleCompra d WHERE d.unidadesCompradas = :unidadesCompradas")
+    , @NamedQuery(name = "DetalleCompra.findByTotalDetalleCompra", query = "SELECT d FROM DetalleCompra d WHERE d.totalDetalleCompra = :totalDetalleCompra")})
 public class DetalleCompra implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -62,10 +72,10 @@ public class DetalleCompra implements Serializable {
     @Column(name = "totalDetalleCompra")
     private float totalDetalleCompra;
     @JoinColumn(name = "idCompra", referencedColumnName = "idCompra")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private Compra idCompra;
     @JoinColumn(name = "idProducto", referencedColumnName = "idProducto")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private Producto idProducto;
 
     public DetalleCompra() {

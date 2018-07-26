@@ -8,12 +8,13 @@ package com.softtrons.entitiesmr.jpa.entities;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -23,9 +24,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author danny
  */
-@MappedSuperclass
+@Entity
 @Table(name = "detalleCreditoCompra", catalog = "moto10racingHBT", schema = "")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "DetalleCreditoCompra.findAll", query = "SELECT d FROM DetalleCreditoCompra d")
+    , @NamedQuery(name = "DetalleCreditoCompra.findByIdDetalleCreditoCompra", query = "SELECT d FROM DetalleCreditoCompra d WHERE d.idDetalleCreditoCompra = :idDetalleCreditoCompra")
+    , @NamedQuery(name = "DetalleCreditoCompra.findByCreditoCompraActual", query = "SELECT d FROM DetalleCreditoCompra d WHERE d.creditoCompraActual = :creditoCompraActual")
+    , @NamedQuery(name = "DetalleCreditoCompra.findByAbonoCreditoCompra", query = "SELECT d FROM DetalleCreditoCompra d WHERE d.abonoCreditoCompra = :abonoCreditoCompra")})
 public class DetalleCreditoCompra implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,10 +49,10 @@ public class DetalleCreditoCompra implements Serializable {
     @Column(name = "abonoCreditoCompra")
     private float abonoCreditoCompra;
     @JoinColumn(name = "idCompra", referencedColumnName = "idCompra")
-    @OneToOne(optional = false, fetch = FetchType.EAGER)
+    @OneToOne(optional = false)
     private Compra idCompra;
     @JoinColumn(name = "idCreditoCompra", referencedColumnName = "idCreditoCompra")
-    @OneToOne(optional = false, fetch = FetchType.EAGER)
+    @OneToOne(optional = false)
     private CreditoCompra idCreditoCompra;
 
     public DetalleCreditoCompra() {

@@ -8,13 +8,14 @@ package com.softtrons.entitiesmr.jpa.entities;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,9 +25,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author danny
  */
-@MappedSuperclass
+@Entity
 @Table(name = "detalleVenta", catalog = "moto10racingHBT", schema = "")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "DetalleVenta.findAll", query = "SELECT d FROM DetalleVenta d")
+    , @NamedQuery(name = "DetalleVenta.findByIdDetalleVenta", query = "SELECT d FROM DetalleVenta d WHERE d.idDetalleVenta = :idDetalleVenta")
+    , @NamedQuery(name = "DetalleVenta.findByCodigoProducto", query = "SELECT d FROM DetalleVenta d WHERE d.codigoProducto = :codigoProducto")
+    , @NamedQuery(name = "DetalleVenta.findByNombreProducto", query = "SELECT d FROM DetalleVenta d WHERE d.nombreProducto = :nombreProducto")
+    , @NamedQuery(name = "DetalleVenta.findByValorVentaProducto", query = "SELECT d FROM DetalleVenta d WHERE d.valorVentaProducto = :valorVentaProducto")
+    , @NamedQuery(name = "DetalleVenta.findByIva", query = "SELECT d FROM DetalleVenta d WHERE d.iva = :iva")
+    , @NamedQuery(name = "DetalleVenta.findByUnidadesVendidas", query = "SELECT d FROM DetalleVenta d WHERE d.unidadesVendidas = :unidadesVendidas")
+    , @NamedQuery(name = "DetalleVenta.findByTotalDetalleVenta", query = "SELECT d FROM DetalleVenta d WHERE d.totalDetalleVenta = :totalDetalleVenta")})
 public class DetalleVenta implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,10 +73,10 @@ public class DetalleVenta implements Serializable {
     @Column(name = "totalDetalleVenta")
     private float totalDetalleVenta;
     @JoinColumn(name = "idProducto", referencedColumnName = "idProducto")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private Producto idProducto;
     @JoinColumn(name = "idVenta", referencedColumnName = "idVenta")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private Venta idVenta;
 
     public DetalleVenta() {

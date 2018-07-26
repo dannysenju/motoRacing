@@ -8,13 +8,14 @@ package com.softtrons.entitiesmr.jpa.entities;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -22,9 +23,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author danny
  */
-@MappedSuperclass
+@Entity
 @Table(name = "empleado_Roles", catalog = "moto10racingHBT", schema = "")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "EmpleadoRoles.findAll", query = "SELECT e FROM EmpleadoRoles e")
+    , @NamedQuery(name = "EmpleadoRoles.findByIdEmpleadoRoles", query = "SELECT e FROM EmpleadoRoles e WHERE e.idEmpleadoRoles = :idEmpleadoRoles")})
 public class EmpleadoRoles implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,10 +38,10 @@ public class EmpleadoRoles implements Serializable {
     @Column(name = "idEmpleado_Roles")
     private Integer idEmpleadoRoles;
     @JoinColumn(name = "idEmpelado", referencedColumnName = "idEmpleado")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private Empleado idEmpelado;
     @JoinColumn(name = "idRoles", referencedColumnName = "idRoles")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private Roles idRoles;
 
     public EmpleadoRoles() {

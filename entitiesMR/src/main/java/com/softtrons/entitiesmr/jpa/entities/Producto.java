@@ -10,14 +10,15 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -29,9 +30,19 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author danny
  */
-@MappedSuperclass
+@Entity
 @Table(name = "Producto", catalog = "moto10racingHBT", schema = "")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Producto.findAll", query = "SELECT p FROM Producto p")
+    , @NamedQuery(name = "Producto.findByIdProducto", query = "SELECT p FROM Producto p WHERE p.idProducto = :idProducto")
+    , @NamedQuery(name = "Producto.findByCodigoProducto", query = "SELECT p FROM Producto p WHERE p.codigoProducto = :codigoProducto")
+    , @NamedQuery(name = "Producto.findByNombreProducto", query = "SELECT p FROM Producto p WHERE p.nombreProducto = :nombreProducto")
+    , @NamedQuery(name = "Producto.findByStockProducto", query = "SELECT p FROM Producto p WHERE p.stockProducto = :stockProducto")
+    , @NamedQuery(name = "Producto.findByValorCompraProducto", query = "SELECT p FROM Producto p WHERE p.valorCompraProducto = :valorCompraProducto")
+    , @NamedQuery(name = "Producto.findByValorVentaProducto", query = "SELECT p FROM Producto p WHERE p.valorVentaProducto = :valorVentaProducto")
+    , @NamedQuery(name = "Producto.findByStockMinimo", query = "SELECT p FROM Producto p WHERE p.stockMinimo = :stockMinimo")
+    , @NamedQuery(name = "Producto.findByIva", query = "SELECT p FROM Producto p WHERE p.iva = :iva")})
 public class Producto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -77,18 +88,18 @@ public class Producto implements Serializable {
     @Size(min = 1, max = 3)
     @Column(name = "IVA")
     private String iva;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
     private List<DetalleCompra> detalleCompraList;
     @JoinColumn(name = "idCategoria", referencedColumnName = "idCategoria")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private Categoria idCategoria;
     @JoinColumn(name = "idPresentacionProducto", referencedColumnName = "idPresentacionProducto")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private PresentacionProducto idPresentacionProducto;
     @JoinColumn(name = "idUbicacionProducto", referencedColumnName = "idUbicacionProducto")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private UbicacionProducto idUbicacionProducto;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
     private List<DetalleVenta> detalleVentaList;
 
     public Producto() {

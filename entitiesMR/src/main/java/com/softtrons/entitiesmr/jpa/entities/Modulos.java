@@ -10,11 +10,12 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -26,9 +27,14 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author danny
  */
-@MappedSuperclass
+@Entity
 @Table(name = "Modulos", catalog = "moto10racingHBT", schema = "")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Modulos.findAll", query = "SELECT m FROM Modulos m")
+    , @NamedQuery(name = "Modulos.findByIdModulos", query = "SELECT m FROM Modulos m WHERE m.idModulos = :idModulos")
+    , @NamedQuery(name = "Modulos.findByCodigoModulo", query = "SELECT m FROM Modulos m WHERE m.codigoModulo = :codigoModulo")
+    , @NamedQuery(name = "Modulos.findByNombreModulo", query = "SELECT m FROM Modulos m WHERE m.nombreModulo = :nombreModulo")})
 public class Modulos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,11 +53,11 @@ public class Modulos implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "nombreModulo")
     private String nombreModulo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modulosidModulos", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modulosidModulos")
     private List<PerModulos> perModulosList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idModulos", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idModulos")
     private List<Menu> menuList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idModulos", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idModulos")
     private List<Roles> rolesList;
 
     public Modulos() {

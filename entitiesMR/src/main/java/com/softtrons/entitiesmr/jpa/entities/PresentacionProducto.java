@@ -10,11 +10,12 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -26,9 +27,13 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author danny
  */
-@MappedSuperclass
+@Entity
 @Table(name = "PresentacionProducto", catalog = "moto10racingHBT", schema = "")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "PresentacionProducto.findAll", query = "SELECT p FROM PresentacionProducto p")
+    , @NamedQuery(name = "PresentacionProducto.findByIdPresentacionProducto", query = "SELECT p FROM PresentacionProducto p WHERE p.idPresentacionProducto = :idPresentacionProducto")
+    , @NamedQuery(name = "PresentacionProducto.findByDescripcionPresentacionPro", query = "SELECT p FROM PresentacionProducto p WHERE p.descripcionPresentacionPro = :descripcionPresentacionPro")})
 public class PresentacionProducto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,7 +47,7 @@ public class PresentacionProducto implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "descripcionPresentacionPro")
     private String descripcionPresentacionPro;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPresentacionProducto", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPresentacionProducto")
     private List<Producto> productoList;
 
     public PresentacionProducto() {

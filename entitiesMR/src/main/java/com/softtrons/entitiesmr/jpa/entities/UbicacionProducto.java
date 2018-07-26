@@ -10,11 +10,12 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -26,9 +27,13 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author danny
  */
-@MappedSuperclass
+@Entity
 @Table(name = "UbicacionProducto", catalog = "moto10racingHBT", schema = "")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "UbicacionProducto.findAll", query = "SELECT u FROM UbicacionProducto u")
+    , @NamedQuery(name = "UbicacionProducto.findByIdUbicacionProducto", query = "SELECT u FROM UbicacionProducto u WHERE u.idUbicacionProducto = :idUbicacionProducto")
+    , @NamedQuery(name = "UbicacionProducto.findByDescripcionUbicacionPro", query = "SELECT u FROM UbicacionProducto u WHERE u.descripcionUbicacionPro = :descripcionUbicacionPro")})
 public class UbicacionProducto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,7 +47,7 @@ public class UbicacionProducto implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "descripcionUbicacionPro")
     private String descripcionUbicacionPro;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUbicacionProducto", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUbicacionProducto")
     private List<Producto> productoList;
 
     public UbicacionProducto() {

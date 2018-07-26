@@ -8,13 +8,14 @@ package com.softtrons.entitiesmr.jpa.entities;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,9 +25,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author danny
  */
-@MappedSuperclass
+@Entity
 @Table(name = "Usuario", catalog = "moto10racingHBT", schema = "")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
+    , @NamedQuery(name = "Usuario.findByIdUsuario", query = "SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario")
+    , @NamedQuery(name = "Usuario.findByUserEmp", query = "SELECT u FROM Usuario u WHERE u.userEmp = :userEmp")
+    , @NamedQuery(name = "Usuario.findByPassEmp", query = "SELECT u FROM Usuario u WHERE u.passEmp = :passEmp")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,7 +52,7 @@ public class Usuario implements Serializable {
     @Column(name = "passEmp")
     private String passEmp;
     @JoinColumn(name = "idEmpleado", referencedColumnName = "idEmpleado")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private Empleado idEmpleado;
 
     public Usuario() {

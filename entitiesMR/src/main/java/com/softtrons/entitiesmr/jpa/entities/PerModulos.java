@@ -8,13 +8,14 @@ package com.softtrons.entitiesmr.jpa.entities;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -22,9 +23,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author danny
  */
-@MappedSuperclass
+@Entity
 @Table(name = "per_Modulos", catalog = "moto10racingHBT", schema = "")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "PerModulos.findAll", query = "SELECT p FROM PerModulos p")
+    , @NamedQuery(name = "PerModulos.findByIdPerModulos", query = "SELECT p FROM PerModulos p WHERE p.idPerModulos = :idPerModulos")})
 public class PerModulos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,10 +38,10 @@ public class PerModulos implements Serializable {
     @Column(name = "idPer_Modulos")
     private Integer idPerModulos;
     @JoinColumn(name = "Modulos_idModulos", referencedColumnName = "idModulos")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private Modulos modulosidModulos;
     @JoinColumn(name = "Perfiles_idPerfiles", referencedColumnName = "idPerfiles")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private Perfiles perfilesidPerfiles;
 
     public PerModulos() {

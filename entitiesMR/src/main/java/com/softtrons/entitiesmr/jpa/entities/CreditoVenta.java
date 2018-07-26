@@ -10,13 +10,14 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -28,9 +29,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author danny
  */
-@MappedSuperclass
+@Entity
 @Table(name = "creditoVenta", catalog = "moto10racingHBT", schema = "")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "CreditoVenta.findAll", query = "SELECT c FROM CreditoVenta c")
+    , @NamedQuery(name = "CreditoVenta.findByIdCreditoVenta", query = "SELECT c FROM CreditoVenta c WHERE c.idCreditoVenta = :idCreditoVenta")
+    , @NamedQuery(name = "CreditoVenta.findByCreditoNuevo", query = "SELECT c FROM CreditoVenta c WHERE c.creditoNuevo = :creditoNuevo")
+    , @NamedQuery(name = "CreditoVenta.findByFechaAbono", query = "SELECT c FROM CreditoVenta c WHERE c.fechaAbono = :fechaAbono")})
 public class CreditoVenta implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,13 +54,13 @@ public class CreditoVenta implements Serializable {
     @Column(name = "fechaAbono")
     @Temporal(TemporalType.DATE)
     private Date fechaAbono;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idCreditoVenta", fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idCreditoVenta")
     private DetalleCreditoVenta detalleCreditoVenta;
     @JoinColumn(name = "idEmpleado", referencedColumnName = "idEmpleado")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private Empleado idEmpleado;
     @JoinColumn(name = "idPersona", referencedColumnName = "idPersona")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private Persona idPersona;
 
     public CreditoVenta() {

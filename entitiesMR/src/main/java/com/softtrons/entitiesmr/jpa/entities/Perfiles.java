@@ -10,11 +10,12 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -26,9 +27,14 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author danny
  */
-@MappedSuperclass
+@Entity
 @Table(name = "Perfiles", catalog = "moto10racingHBT", schema = "")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Perfiles.findAll", query = "SELECT p FROM Perfiles p")
+    , @NamedQuery(name = "Perfiles.findByIdPerfiles", query = "SELECT p FROM Perfiles p WHERE p.idPerfiles = :idPerfiles")
+    , @NamedQuery(name = "Perfiles.findByCodigoPerfil", query = "SELECT p FROM Perfiles p WHERE p.codigoPerfil = :codigoPerfil")
+    , @NamedQuery(name = "Perfiles.findByNombrePefil", query = "SELECT p FROM Perfiles p WHERE p.nombrePefil = :nombrePefil")})
 public class Perfiles implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,9 +53,9 @@ public class Perfiles implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "nombrePefil")
     private String nombrePefil;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "perfilesidPerfiles", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "perfilesidPerfiles")
     private List<PerModulos> perModulosList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPerfiles", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPerfiles")
     private List<EmpleadoUsuarios> empleadoUsuariosList;
 
     public Perfiles() {

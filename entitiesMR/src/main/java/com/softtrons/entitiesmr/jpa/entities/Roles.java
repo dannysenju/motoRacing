@@ -10,13 +10,14 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -28,9 +29,14 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author danny
  */
-@MappedSuperclass
+@Entity
 @Table(name = "Roles", catalog = "moto10racingHBT", schema = "")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Roles.findAll", query = "SELECT r FROM Roles r")
+    , @NamedQuery(name = "Roles.findByIdRoles", query = "SELECT r FROM Roles r WHERE r.idRoles = :idRoles")
+    , @NamedQuery(name = "Roles.findByCodigoRol", query = "SELECT r FROM Roles r WHERE r.codigoRol = :codigoRol")
+    , @NamedQuery(name = "Roles.findByNombreRol", query = "SELECT r FROM Roles r WHERE r.nombreRol = :nombreRol")})
 public class Roles implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,9 +56,9 @@ public class Roles implements Serializable {
     @Column(name = "nombreRol")
     private String nombreRol;
     @JoinColumn(name = "idModulos", referencedColumnName = "idModulos")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private Modulos idModulos;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRoles", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRoles")
     private List<EmpleadoRoles> empleadoRolesList;
 
     public Roles() {

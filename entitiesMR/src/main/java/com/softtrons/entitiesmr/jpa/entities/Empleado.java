@@ -10,13 +10,14 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -29,9 +30,18 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author danny
  */
-@MappedSuperclass
+@Entity
 @Table(name = "Empleado", catalog = "moto10racingHBT", schema = "")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Empleado.findAll", query = "SELECT e FROM Empleado e")
+    , @NamedQuery(name = "Empleado.findByIdEmpleado", query = "SELECT e FROM Empleado e WHERE e.idEmpleado = :idEmpleado")
+    , @NamedQuery(name = "Empleado.findByIdentificacionEmpleado", query = "SELECT e FROM Empleado e WHERE e.identificacionEmpleado = :identificacionEmpleado")
+    , @NamedQuery(name = "Empleado.findByNombresEmpleado", query = "SELECT e FROM Empleado e WHERE e.nombresEmpleado = :nombresEmpleado")
+    , @NamedQuery(name = "Empleado.findByApellidosEmpleado", query = "SELECT e FROM Empleado e WHERE e.apellidosEmpleado = :apellidosEmpleado")
+    , @NamedQuery(name = "Empleado.findByDireccionEmpleado", query = "SELECT e FROM Empleado e WHERE e.direccionEmpleado = :direccionEmpleado")
+    , @NamedQuery(name = "Empleado.findByTelefonoEmpleado", query = "SELECT e FROM Empleado e WHERE e.telefonoEmpleado = :telefonoEmpleado")
+    , @NamedQuery(name = "Empleado.findByCorreoEmpleado", query = "SELECT e FROM Empleado e WHERE e.correoEmpleado = :correoEmpleado")})
 public class Empleado implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -69,25 +79,25 @@ public class Empleado implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "correoEmpleado")
     private String correoEmpleado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmpleado", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmpleado")
     private List<Usuario> usuarioList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmpleado", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmpleado")
     private List<Venta> ventaList;
     @JoinColumn(name = "idCiudad", referencedColumnName = "idCiudad")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private Ciudad idCiudad;
     @JoinColumn(name = "idDepartamento", referencedColumnName = "idDepartamento")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private Departamento idDepartamento;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmpleado", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmpleado")
     private List<CreditoVenta> creditoVentaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmpelado", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmpelado")
     private List<EmpleadoRoles> empleadoRolesList;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idEmpleado", fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idEmpleado")
     private CreditoCompra creditoCompra;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmpleado", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmpleado")
     private List<Compra> compraList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmpleado", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmpleado")
     private List<EmpleadoUsuarios> empleadoUsuariosList;
 
     public Empleado() {
